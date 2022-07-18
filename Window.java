@@ -5,13 +5,14 @@ import java.awt.event.*;
 
 public class Window implements ActionListener {
     JFrame mWindow, mDialog;
-    JButton btnSearch, btnList, btnAdd, btnModify, btnDelete, btnChoice;
+    JButton btnSearch, btnList, btnAdd, btnModify, btnDelete, btnChoice, btnExit;
     JMenuBar menu;
     JMenu inicio, mantenimiento;
     JMenuItem menuInicio, menuPacientes, menuMedicos;
 
     public void windowPrint() {
         mWindow = new JFrame("Semestral DS3");
+        mWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mWindow.setSize(1000, 1000);
         mWindow.setLayout(null);
         mWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,11 +39,37 @@ public class Window implements ActionListener {
         menuMedicos.addActionListener(this);
 
         mWindow.setVisible(true);
+
+        exit();
+    }
+
+    public void exit() {
+        mWindow.getContentPane().removeAll();
+        btnExit = new JButton("Salir");
+        btnExit.setBounds(100, 900, 1700, 50);
+        btnExit.addActionListener(this);
+        mWindow.add(btnExit);
+        mWindow.revalidate();
+        mWindow.repaint();
+    }
+
+    public void hola() {
+        mWindow.getContentPane().removeAll();
+        mWindow.revalidate();
+        mWindow.repaint();
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuInicio) {
-            System.out.println("HOLA");
+            exit();
+        }
+        if (e.getSource() == menuMedicos) {
+            hola();
+
+            // windowMedicos(mWindow);
+        }
+        if (e.getSource() == menuPacientes) {
+            Mantenimiento.windowMedicos();
         }
     }
 }
