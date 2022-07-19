@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.util.*;
+import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -11,6 +12,7 @@ public class Window implements ActionListener {
     JMenuItem menuInicio, menuPacientes, menuMedicos;
 
     public void windowPrint() {
+
         mWindow = new JFrame("Semestral DS3");
         mWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mWindow.setSize(1000, 1000);
@@ -64,12 +66,14 @@ public class Window implements ActionListener {
             exit();
         }
         if (e.getSource() == menuMedicos) {
-            hola();
+            new windowMed(mWindow);
 
-            // windowMedicos(mWindow);
         }
         if (e.getSource() == menuPacientes) {
-            Mantenimiento.windowMedicos();
+
+        }
+        if (e.getSource() == btnExit) {
+            System.exit(0);
         }
     }
 }
