@@ -122,7 +122,7 @@ public class windowMed implements ActionListener {
         listModel = new DefaultListModel<String>();
         list = new JList<String>(listModel);
         scroll = new JScrollPane();
-        scroll.setBounds(20, 70, 1850, 700);
+        scroll.setBounds(20, 80, 1850, 690);
         list.add(scroll);
         windowMeds.add(scroll);
 
