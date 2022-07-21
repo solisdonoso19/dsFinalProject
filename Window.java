@@ -48,7 +48,7 @@ public class Window implements ActionListener {
     public void exit() {
         mWindow.getContentPane().removeAll();
         btnExit = new JButton("Salir");
-        btnExit.setBounds(100, 900, 1700, 50);
+        btnExit.setBounds(100, 890, 1700, 50);
         btnExit.addActionListener(this);
         mWindow.add(btnExit);
         mWindow.revalidate();
@@ -70,7 +70,7 @@ public class Window implements ActionListener {
 
         }
         if (e.getSource() == menuPacientes) {
-
+            new windowPac(mWindow);
         }
         if (e.getSource() == btnExit) {
             System.exit(0);

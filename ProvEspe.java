@@ -1,10 +1,10 @@
-import javax.util.*
+import javax.util.*;
 import javax.swing.*;
 
 public class ProvEspe {
     protected Integer id;
     protected String codigo, descripcion;
-    
+
     public ProvEspe(Integer id, String codigo) {
         this.id = id;
         this.codigo = codigo;
@@ -34,5 +34,4 @@ public class ProvEspe {
         this.descripcion = descripcion;
     }
 
-    
 }

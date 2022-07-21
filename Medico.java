@@ -1,10 +1,9 @@
-import java.util.*
+import java.util.*;
 import java.swing.*;
 
-public class Medico extends Persona{
+public class Medico extends Persona {
     Integer codigo, especialidad, pacientes_mes, pacientes_anual;
 
-    
     public Medico(Integer codigo, Integer especialidad) {
         this.codigo = codigo;
         this.especialidad = especialidad;
@@ -42,5 +41,4 @@ public class Medico extends Persona{
         this.pacientes_anual = pacientes_anual;
     }
 
-    
 }

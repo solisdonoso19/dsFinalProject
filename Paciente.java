@@ -1,9 +1,8 @@
-import java.util.*
+import java.util.*;
 import java.swing.*;
 
+public class Paciente extends Persona {
 
-public class Paciente extends Persona{
-    
     String provincia, sexo;
     Integer edad;
 
