@@ -1,13 +1,9 @@
 import java.util.*;
-import java.swing.*;
+import javax.swing.*;
 
 public class Medico extends Persona {
     Integer codigo, especialidad, pacientes_mes, pacientes_anual;
-
-    public Medico(Integer codigo, Integer especialidad) {
-        this.codigo = codigo;
-        this.especialidad = especialidad;
-    }
+    MySql BD = new MySql();
 
     public Integer getCodigo() {
         return codigo;
@@ -39,6 +35,10 @@ public class Medico extends Persona {
 
     public void setPacientes_anual(Integer pacientes_anual) {
         this.pacientes_anual = pacientes_anual;
+    }
+
+    public void list() {
+
     }
 
 }

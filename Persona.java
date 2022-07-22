@@ -1,15 +1,17 @@
-import javax.util.*;
+import java.sql.*;
+import java.util.*;
 import javax.swing.*;
 
 public class Persona {
     protected Integer id;
     protected String cedula, nombre, apellido, tel, dir;
 
-    public Persona(Integer id, String cedula, String nombre, String apellido) {
-        this.id = id;
-        this.cedula = cedula;
-        this.nombre = nombre;
-        this.apellido = apellido;
+    public void init() {
+        cedula = "";
+        nombre = "";
+        apellido = "";
+        tel = "";
+        dir = "";
     }
 
     // getters and setters

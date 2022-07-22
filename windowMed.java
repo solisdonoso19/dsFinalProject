@@ -3,12 +3,13 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class windowMed implements ActionListener {
+public class windowMed extends Medico implements ActionListener {
     public JFrame windowMeds;
     public DefaultListModel<String> listModel;
     public JList<String> list;
     public JScrollPane scroll;
-    public JTextField txtCod, txtCed, txtName, txtLastName, txtAddress, txtTel, txtMonth, txtYear, txtEsp;
+    public JTextField txtCod, txtCed, txtName, txtLastName, txtAddress, txtTel, txtMonth, txtYear;
+    public JComboBox esp;
     public JButton btnSearch, btnList, btnAdd, btnModify, btnDelete, btnChoice, btnClean;
     public JLabel info;
 
@@ -38,22 +39,26 @@ public class windowMed implements ActionListener {
         btnAdd = new JButton("Agregar");
         btnAdd.setBounds(150, 775, 100, 50);
         btnAdd.addActionListener(this);
+        btnAdd.setEnabled(false);
         windowMeds.add(btnAdd);
 
         btnModify = new JButton("Modificar");
         btnModify.setBounds(280, 775, 100, 50);
         btnModify.addActionListener(this);
+        btnModify.setEnabled(false);
         windowMeds.add(btnModify);
 
         btnDelete = new JButton("Eliminar");
         btnDelete.setBounds(410, 775, 100, 50);
         btnDelete.addActionListener(this);
+        btnDelete.setEnabled(false);
         windowMeds.add(btnDelete);
 
         btnClean = new JButton("Limpiar");
         btnClean.setBounds(540, 775, 100, 50);
         btnClean.addActionListener(this);
-        windowMeds.add(btnList);
+        btnClean.setEnabled(false);
+        windowMeds.add(btnClean);
 
         info = new JLabel("Codigo:");
         info.setBounds(25, 820, 100, 50);
@@ -62,6 +67,14 @@ public class windowMed implements ActionListener {
         txtCod = new JTextField();
         txtCod.setBounds(80, 830, 150, 30);
         windowMeds.add(txtCod);
+
+        info = new JLabel("Cedula:");
+        info.setBounds(25, 860, 100, 50);
+        windowMeds.add(info);
+
+        txtCed = new JTextField();
+        txtCed.setBounds(80, 870, 150, 30);
+        windowMeds.add(txtCed);
 
         info = new JLabel("Nombre:");
         info.setBounds(250, 820, 100, 50);
@@ -115,9 +128,20 @@ public class windowMed implements ActionListener {
         info.setBounds(1650, 820, 100, 50);
         windowMeds.add(info);
 
-        txtEsp = new JTextField();
-        txtEsp.setBounds(1735, 830, 150, 30);
-        windowMeds.add(txtEsp);
+        esp = new JComboBox();
+        esp.setBounds(1735, 830, 150, 30);
+        esp.addItem("");
+        esp.addItem("Medico General");
+        esp.addItem("Interno");
+        esp.addItem("Cirujano");
+        esp.addItem("Pediatra");
+        esp.addItem("Psiquiatra");
+        esp.addItem("Dermatologo");
+        esp.addItem("Dentista");
+        esp.addItem("Reumatologo");
+        esp.addItem("Oftamologo");
+        esp.addItem("Ginecologo");
+        windowMeds.add(esp);
 
         listModel = new DefaultListModel<String>();
         list = new JList<String>(listModel);

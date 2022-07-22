@@ -3,14 +3,16 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class windowPac implements ActionListener {
+public class windowPac extends Paciente implements ActionListener {
     public JFrame windowPac;
     public DefaultListModel<String> listModel;
     public JList<String> list;
     public JScrollPane scroll;
-    public JTextField txtCod, txtCed, txtName, txtLastName, txtAddress, txtTel, txtAge, txtSex, txtProv;
+    public JTextField txtCed, txtName, txtLastName, txtAddress, txtTel, txtAge, txtSex;
+    public JComboBox prov;
     public JButton btnSearch, btnList, btnAdd, btnModify, btnDelete, btnChoice, btnClean;
     public JLabel info;
+    public Paciente paciente = new Paciente();
 
     windowPac(JFrame window) {
         windowPac = window;
@@ -38,30 +40,34 @@ public class windowPac implements ActionListener {
         btnAdd = new JButton("Agregar");
         btnAdd.setBounds(150, 775, 100, 50);
         btnAdd.addActionListener(this);
+        btnAdd.setEnabled(false);
         windowPac.add(btnAdd);
 
         btnModify = new JButton("Modificar");
         btnModify.setBounds(280, 775, 100, 50);
         btnModify.addActionListener(this);
+        btnModify.setEnabled(false);
         windowPac.add(btnModify);
 
         btnDelete = new JButton("Eliminar");
         btnDelete.setBounds(410, 775, 100, 50);
         btnDelete.addActionListener(this);
+        btnDelete.setEnabled(false);
         windowPac.add(btnDelete);
 
         btnClean = new JButton("Limpiar");
         btnClean.setBounds(540, 775, 100, 50);
         btnClean.addActionListener(this);
-        windowPac.add(btnList);
+        btnClean.setEnabled(false);
+        windowPac.add(btnClean);
 
-        info = new JLabel("Codigo:");
+        info = new JLabel("Cedula:");
         info.setBounds(25, 820, 100, 50);
         windowPac.add(info);
 
-        txtCod = new JTextField();
-        txtCod.setBounds(80, 830, 150, 30);
-        windowPac.add(txtCod);
+        txtCed = new JTextField();
+        txtCed.setBounds(80, 830, 150, 30);
+        windowPac.add(txtCed);
 
         info = new JLabel("Nombre:");
         info.setBounds(250, 820, 100, 50);
@@ -115,9 +121,20 @@ public class windowPac implements ActionListener {
         info.setBounds(1545, 820, 100, 50);
         windowPac.add(info);
 
-        txtProv = new JTextField();
-        txtProv.setBounds(1605, 830, 150, 30);
-        windowPac.add(txtProv);
+        prov = new JComboBox();
+        prov.setBounds(1605, 830, 150, 30);
+        prov.addItem("");
+        prov.addItem("Bocas Del Toro");
+        prov.addItem("Chiriqui");
+        prov.addItem("Colon");
+        prov.addItem("Cocle");
+        prov.addItem("Darien");
+        prov.addItem("Herrera");
+        prov.addItem("Los Santos");
+        prov.addItem("Panama");
+        prov.addItem("Veraguas");
+        prov.addItem("Panama Oeste");
+        windowPac.add(prov);
 
         listModel = new DefaultListModel<String>();
         list = new JList<String>(listModel);
@@ -129,7 +146,45 @@ public class windowPac implements ActionListener {
         windowPac.repaint();
     }
 
-    public void actionPerformed(ActionEvent e) {
+    public void search() {
+        if (paciente.search(txtCed.getText())) {
+            btnModify.setEnabled(true);
+            btnDelete.setEnabled(true);
+            btnClean.setEnabled(true);
+            btnAdd.setEnabled(false);
+        } else {
+            btnModify.setEnabled(false);
+            btnDelete.setEnabled(false);
+            btnAdd.setEnabled(true);
+        }
+        txtCed.setText(paciente.objPersona.getCedula());
+        txtName.setText(paciente.objPersona.getNombre());
+        txtLastName.setText(paciente.objPersona.getApellido());
+        txtAddress.setText(paciente.objPersona.getDir());
+        txtTel.setText(paciente.objPersona.getTel());
+        // prov.setSelectedItem(paciente.getProvincia());
+        txtAge.setText(String.valueOf(paciente.getEdad()));
+        txtSex.setText(paciente.getSexo());
+    }
 
+    public void add() {
+        paciente.objPersona.setCedula(txtCed.getText());
+        paciente.objPersona.setNombre(txtName.getText());
+        paciente.objPersona.setApellido(txtLastName.getText());
+        paciente.objPersona.setDir(txtAddress.getText());
+        paciente.objPersona.setTel(txtTel.getText());
+        // paciente.provincia(prov.getSelectedItem());
+        paciente.setEdad(Integer.parseInt(txtAge.getText()));
+        paciente.setSexo(txtSex.getText());
+        paciente.add();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnSearch) {
+            search();
+        }
+        if (e.getSource() == btnAdd) {
+            add();
+        }
     }
 }

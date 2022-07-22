@@ -4,9 +4,9 @@ import java.sql.DriverManager;
 
 public class MySql {
     String URL, USER, PASS, sql, s;
-    Connection bd;
+    Connection con;
     Statement stmt;
-    ResultSet view;
+    ResultSet rs;
 
     MySql() {
         URL = "jdbc:mysql://localhost/ds3?useSSL=false";
@@ -16,20 +16,19 @@ public class MySql {
 
     public void open() {
         try {
-            bd = DriverManager.getConnection(URL, USER, PASS);
-            stmt = bd.createStatement();
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(URL, USER, PASS);
+            stmt = con.createStatement();
         } catch (Exception e) {
             System.out.println("error " + e.toString());
         }
     }
 
-    // Class.forName("com.mysql.jdbc.Driver");
-
     public void close() {
         try {
-            view.close();
+            rs.close();
             stmt.close();
-            bd.close();
+            con.close();
         } catch (Exception e) {
             System.out.println("error " + e.toString());
         }
@@ -38,11 +37,11 @@ public class MySql {
     public ResultSet executeQuery(String sql) {
         try {
             open();
-            view = stmt.executeQuery(sql);
+            rs = stmt.executeQuery(sql);
         } catch (Exception e) {
             System.out.println("error " + e.toString());
         }
-        return view;
+        return rs;
 
     }
 
