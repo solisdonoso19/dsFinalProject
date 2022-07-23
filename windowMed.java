@@ -1,17 +1,19 @@
 import javax.swing.*;
+import javax.swing.table.*;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class windowMed extends Medico implements ActionListener {
     public JFrame windowMeds;
-    public DefaultListModel<String> listModel;
-    public JList<String> list;
+    public DefaultTableModel tableModel;
+    public JTable table;
     public JScrollPane scroll;
     public JTextField txtCod, txtCed, txtName, txtLastName, txtAddress, txtTel, txtMonth, txtYear;
     public JComboBox esp;
     public JButton btnSearch, btnList, btnAdd, btnModify, btnDelete, btnChoice, btnClean;
     public JLabel info;
+    public ProvEspe provincia = new ProvEspe();
 
     windowMed(JFrame window) {
         windowMeds = window;
@@ -130,24 +132,15 @@ public class windowMed extends Medico implements ActionListener {
 
         esp = new JComboBox();
         esp.setBounds(1735, 830, 150, 30);
-        esp.addItem("");
-        esp.addItem("Medico General");
-        esp.addItem("Interno");
-        esp.addItem("Cirujano");
-        esp.addItem("Pediatra");
-        esp.addItem("Psiquiatra");
-        esp.addItem("Dermatologo");
-        esp.addItem("Dentista");
-        esp.addItem("Reumatologo");
-        esp.addItem("Oftamologo");
-        esp.addItem("Ginecologo");
+        provincia.listEsp(esp);
+        windowMeds.add(esp);
         windowMeds.add(esp);
 
-        listModel = new DefaultListModel<String>();
-        list = new JList<String>(listModel);
+        tableModel = new DefaultTableModel();
+        table = new JTable(tableModel);
         scroll = new JScrollPane();
         scroll.setBounds(20, 80, 1850, 690);
-        list.add(scroll);
+        table.add(scroll);
         windowMeds.add(scroll);
 
         windowMeds.repaint();

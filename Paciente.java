@@ -1,13 +1,14 @@
-import java.security.Principal;
 import java.sql.*;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.table.*;
 
 public class Paciente extends Persona {
 
     String provincia, sexo;
     Integer edad;
     Persona objPersona = new Persona();
+    ProvEspe provEspe = new ProvEspe();
     MySql DB = new MySql();
     private String sql;
 
@@ -20,6 +21,10 @@ public class Paciente extends Persona {
 
     public String getProvincia() {
         return provincia;
+    }
+
+    public String getNameProv() {
+        return provEspe.getDescripcion(provincia);
     }
 
     public void setProvincia(String provincia) {
@@ -73,53 +78,84 @@ public class Paciente extends Persona {
         return find;
     }
 
-    /*
-     * public void listar(DefaultTableModel dtm)
-     * {
-     * sql = "";
-     * 
-     * dtm.setColumnCount(0);
-     * dtm.setRowCount(0);
-     * 
-     * dtm.addColumn("Cedula");
-     * dtm.addColumn("Nombre");
-     * dtm.addColumn("Apellido");
-     * dtm.addColumn("Provincia");
-     * 
-     * Object[] fila = new Object[4];
-     * 
-     * try
-     * {
-     * 
-     * sql =
-     * "select * from cliente,provincia where cliente.provincia = provincia.codigo";
-     * ResultSet rs = db.executeQuery(sql);
-     * 
-     * while (rs.next())
-     * {
-     * fila[0] = rs.getString("cedula");
-     * fila[1] = rs.getString("nombre");
-     * fila[2] = rs.getString("apellido");
-     * fila[3] = rs.getString("descripcion");
-     * dtm.addRow(fila);
-     * }
-     * db.cerrar();
-     * }
-     * catch(Exception e)
-     * {
-     * System.out.println("error "+e.toString());
-     * }
-     * }
-     */
+    public void listTable(DefaultTableModel table) {
+        sql = "";
+
+        table.setColumnCount(0);
+        table.setRowCount(0);
+
+        table.addColumn("Cedula");
+        table.addColumn("Nombre");
+        table.addColumn("Apellido");
+        table.addColumn("Dirección");
+        table.addColumn("Telefono");
+        table.addColumn("Provincia");
+        table.addColumn("Edad");
+        table.addColumn("Sexo");
+
+        Object[] row = new Object[8];
+
+        try {
+
+            sql = "SELECT * FROM PACIENTES, PROVINCIA WHERE PACIENTES.PROVINCIA = PROVINCIA.CODIGO";
+            ResultSet rs = DB.executeQuery(sql);
+
+            while (rs.next()) {
+                row[0] = rs.getString("CEDULA");
+                row[1] = rs.getString("NOMBRE");
+                row[2] = rs.getString("APELLIDO");
+                row[3] = rs.getString("DIRECCION");
+                row[4] = rs.getString("TELEFONO");
+                row[5] = rs.getString("DESCRIPCION");
+                row[6] = rs.getString("EDAD");
+                row[7] = rs.getString("SEXO");
+                table.addRow(row);
+            }
+            DB.close();
+        } catch (Exception e) {
+            System.out.println("error " + e.toString());
+        }
+    }
 
     public void add() {
         sql = "";
         try {
-            sql = "insert into pacientes(cedula,nombre,apellido,direccion,telefono, edad,sexo) values ("
-                    + objPersona.cedula + ", " + objPersona.nombre + ", " + objPersona.apellido + ", " + objPersona.tel
-                    + ", " + objPersona.dir + ", " + edad + ", " + sexo + ")";
+            sql = "insert into pacientes(cedula,nombre,apellido,direccion,telefono, provincia, edad, sexo) values ('"
+                    + objPersona.cedula + "', '" + objPersona.nombre + "', '" + objPersona.apellido + "', '"
+                    + objPersona.dir
+                    + "', '" + objPersona.tel + "', '" + "01', '" + edad + "', '" + sexo + "')";
             System.out.println(sql);
             DB.executeUpdate(sql);
+        } catch (Exception e) {
+            System.out.println("error " + e.toString());
+        }
+    }
+
+    public void modify() {
+        sql = "";
+        try {
+            sql = "UPDATE PA SET NOMBRE='" + objPersona.nombre + "', APELLIDO = '" + objPersona.apellido
+                    + "', DIRECCION = '"
+                    + objPersona.dir + "', TELEFONO = '" + objPersona.tel + "', PA.PROVINCIA =  '" + provincia
+                    + "', EDAD = '" + edad + "', SEXO = '" + sexo
+                    + "' FROM PACIENTES PA JOIN PROVINCIA PR ON PA.PROVINCIA = PR.CODIGO WHERE CEDULA = '"
+                    + objPersona.cedula + "'";
+            System.out.println(sql);
+            DB.executeUpdate(sql);
+        } catch (Exception e) {
+            System.out.println("error " + e.toString());
+        }
+        System.out.println(sql);
+    }
+
+    public void delete() {
+        sql = "";
+        try {
+            sql = "DELETE FROM PACIENTES WHERE CEDULA = '" + objPersona.cedula + "'";
+
+            System.out.println(sql);
+            DB.executeUpdate(sql);
+
         } catch (Exception e) {
             System.out.println("error " + e.toString());
         }

@@ -1,18 +1,20 @@
 import javax.swing.*;
+import javax.swing.table.*;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class windowPac extends Paciente implements ActionListener {
     public JFrame windowPac;
-    public DefaultListModel<String> listModel;
-    public JList<String> list;
+    public DefaultTableModel tableModel;
+    public JTable table;
     public JScrollPane scroll;
     public JTextField txtCed, txtName, txtLastName, txtAddress, txtTel, txtAge, txtSex;
     public JComboBox prov;
     public JButton btnSearch, btnList, btnAdd, btnModify, btnDelete, btnChoice, btnClean;
     public JLabel info;
     public Paciente paciente = new Paciente();
+    public ProvEspe provincia = new ProvEspe();
 
     windowPac(JFrame window) {
         windowPac = window;
@@ -75,6 +77,7 @@ public class windowPac extends Paciente implements ActionListener {
 
         txtName = new JTextField();
         txtName.setBounds(305, 830, 150, 30);
+        txtName.setEditable(false);
         windowPac.add(txtName);
 
         info = new JLabel("Apellido:");
@@ -83,6 +86,7 @@ public class windowPac extends Paciente implements ActionListener {
 
         txtLastName = new JTextField();
         txtLastName.setBounds(530, 830, 150, 30);
+        txtLastName.setEditable(false);
         windowPac.add(txtLastName);
 
         info = new JLabel("Dirección:");
@@ -91,6 +95,7 @@ public class windowPac extends Paciente implements ActionListener {
 
         txtAddress = new JTextField();
         txtAddress.setBounds(765, 830, 150, 30);
+        txtAddress.setEditable(false);
         windowPac.add(txtAddress);
 
         info = new JLabel("Teléfono:");
@@ -99,6 +104,7 @@ public class windowPac extends Paciente implements ActionListener {
 
         txtTel = new JTextField();
         txtTel.setBounds(985, 830, 150, 30);
+        txtTel.setEditable(false);
         windowPac.add(txtTel);
 
         info = new JLabel("Edad:");
@@ -107,6 +113,7 @@ public class windowPac extends Paciente implements ActionListener {
 
         txtAge = new JTextField();
         txtAge.setBounds(1190, 830, 150, 30);
+        txtAge.setEditable(false);
         windowPac.add(txtAge);
 
         info = new JLabel("Sexo:");
@@ -115,6 +122,7 @@ public class windowPac extends Paciente implements ActionListener {
 
         txtSex = new JTextField();
         txtSex.setBounds(1385, 830, 150, 30);
+        txtSex.setEditable(false);
         windowPac.add(txtSex);
 
         info = new JLabel("Provincia:");
@@ -123,24 +131,14 @@ public class windowPac extends Paciente implements ActionListener {
 
         prov = new JComboBox();
         prov.setBounds(1605, 830, 150, 30);
-        prov.addItem("");
-        prov.addItem("Bocas Del Toro");
-        prov.addItem("Chiriqui");
-        prov.addItem("Colon");
-        prov.addItem("Cocle");
-        prov.addItem("Darien");
-        prov.addItem("Herrera");
-        prov.addItem("Los Santos");
-        prov.addItem("Panama");
-        prov.addItem("Veraguas");
-        prov.addItem("Panama Oeste");
+        provincia.listProv(prov);
+        prov.setEditable(false);
         windowPac.add(prov);
 
-        listModel = new DefaultListModel<String>();
-        list = new JList<String>(listModel);
-        scroll = new JScrollPane();
+        tableModel = new DefaultTableModel();
+        table = new JTable(tableModel);
+        scroll = new JScrollPane(table);
         scroll.setBounds(20, 80, 1850, 690);
-        list.add(scroll);
         windowPac.add(scroll);
 
         windowPac.repaint();
@@ -162,7 +160,7 @@ public class windowPac extends Paciente implements ActionListener {
         txtLastName.setText(paciente.objPersona.getApellido());
         txtAddress.setText(paciente.objPersona.getDir());
         txtTel.setText(paciente.objPersona.getTel());
-        // prov.setSelectedItem(paciente.getProvincia());
+        prov.setSelectedItem(paciente.getNameProv());
         txtAge.setText(String.valueOf(paciente.getEdad()));
         txtSex.setText(paciente.getSexo());
     }
@@ -175,16 +173,62 @@ public class windowPac extends Paciente implements ActionListener {
         paciente.objPersona.setTel(txtTel.getText());
         // paciente.provincia(prov.getSelectedItem());
         paciente.setEdad(Integer.parseInt(txtAge.getText()));
-        paciente.setSexo(txtSex.getText());
+        paciente.setSexo(txtSex.getText().toUpperCase());
         paciente.add();
     }
 
+    public void modify() {
+        paciente.objPersona.setCedula(txtCed.getText());
+        paciente.objPersona.setNombre(txtName.getText());
+        paciente.objPersona.setApellido(txtLastName.getText());
+        paciente.objPersona.setDir(txtAddress.getText());
+        paciente.objPersona.setTel(txtTel.getText());
+        paciente.setProvincia(String.valueOf(prov.getSelectedItem()));
+        paciente.setEdad(Integer.parseInt(txtAge.getText()));
+        paciente.setSexo(txtSex.getText());
+        paciente.modify();
+    }
+
+    public void delete() {
+        paciente.objPersona.setCedula(txtCed.getText());
+        paciente.delete();
+    }
+
+    public void clean() {
+        txtCed.setText(" ");
+        txtName.setText(" ");
+        txtLastName.setText(" ");
+        txtAddress.setText(" ");
+        txtTel.setText(" ");
+        prov.setSelectedItem(" ");
+        txtAge.setText(" ");
+        txtSex.setText(" ");
+    }
+
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnList) {
+            paciente.listTable(tableModel);
+        }
+        if (e.getSource() == btnChoice) {
+            int row;
+            row = table.getSelectedRow();
+            txtCed.setText(String.valueOf(table.getValueAt(row, 0)));
+            search();
+        }
         if (e.getSource() == btnSearch) {
             search();
         }
         if (e.getSource() == btnAdd) {
             add();
+        }
+        if (e.getSource() == btnDelete) {
+            delete();
+        }
+        if (e.getSource() == btnModify) {
+            modify();
+        }
+        if (e.getSource() == btnClean) {
+            clean();
         }
     }
 }

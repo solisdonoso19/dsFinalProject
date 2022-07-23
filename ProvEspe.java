@@ -1,22 +1,10 @@
-import javax.util.*;
+import java.util.*;
 import javax.swing.*;
+import java.sql.*;
 
 public class ProvEspe {
-    protected Integer id;
+    MySql DB = new MySql();
     protected String codigo, descripcion;
-
-    public ProvEspe(Integer id, String codigo) {
-        this.id = id;
-        this.codigo = codigo;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getCodigo() {
         return codigo;
@@ -26,7 +14,20 @@ public class ProvEspe {
         this.codigo = codigo;
     }
 
-    public String getDescripcion() {
+    public String getDescripcion(String cod) {
+        String sql;
+        ResultSet rs;
+        try {
+            sql = "SELECT * FROM PROVINCIA WHERE CODIGO = '" + cod + "'";
+            rs = DB.executeQuery(sql);
+            if (rs.next()) {
+                codigo = rs.getString("CODIGO");
+                descripcion = rs.getString("DESCRIPCION");
+            }
+            DB.close();
+        } catch (Exception e) {
+            System.out.println("error " + e.toString());
+        }
         return descripcion;
     }
 
@@ -34,4 +35,37 @@ public class ProvEspe {
         this.descripcion = descripcion;
     }
 
+    public void listProv(JComboBox<String> combo) {
+        String sql;
+        ResultSet rs;
+
+        try {
+            sql = "SELECT * FROM PROVINCIA ORDER BY DESCRIPCION";
+            rs = DB.executeQuery(sql);
+            while (rs.next()) {
+                combo.addItem(rs.getString("DESCRIPCION"));
+            }
+            DB.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.toString());
+        }
+
+    }
+
+    public void listEsp(JComboBox<String> combo) {
+        String sql;
+        ResultSet rs;
+
+        try {
+            sql = "SELECT * FROM ESPECIALIDAD ORDER BY DESCRIPCION";
+            rs = DB.executeQuery(sql);
+            while (rs.next()) {
+                combo.addItem(rs.getString("DESCRIPCION"));
+            }
+            DB.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.toString());
+        }
+
+    }
 }
