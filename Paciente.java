@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 public class Paciente extends Persona {
-
+    JFrame mDialog;
     String provincia, sexo;
     Integer edad;
     Persona objPersona = new Persona();
@@ -126,6 +126,7 @@ public class Paciente extends Persona {
                     + "', '" + objPersona.tel + "', '" + "01', '" + edad + "', '" + sexo + "')";
             System.out.println(sql);
             DB.executeUpdate(sql);
+            JOptionPane.showMessageDialog(mDialog, "Los datos se guardaron correctamente");
         } catch (Exception e) {
             System.out.println("error " + e.toString());
         }
@@ -142,6 +143,7 @@ public class Paciente extends Persona {
                     + objPersona.cedula + "'";
             System.out.println(sql);
             DB.executeUpdate(sql);
+            JOptionPane.showMessageDialog(mDialog, "Los datos se modificaron correctamente");
         } catch (Exception e) {
             System.out.println("error " + e.toString());
         }
@@ -155,7 +157,7 @@ public class Paciente extends Persona {
 
             System.out.println(sql);
             DB.executeUpdate(sql);
-
+            JOptionPane.showMessageDialog(mDialog, "Los datos se Borraron correctamente");
         } catch (Exception e) {
             System.out.println("error " + e.toString());
         }

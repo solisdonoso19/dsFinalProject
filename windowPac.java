@@ -32,6 +32,7 @@ public class windowPac extends Paciente implements ActionListener {
         btnChoice = new JButton("Escoger");
         btnChoice.setBounds(150, 20, 100, 50);
         btnChoice.addActionListener(this);
+        btnChoice.setEnabled(false);
         windowPac.add(btnChoice);
 
         btnSearch = new JButton("Buscar");
@@ -60,7 +61,6 @@ public class windowPac extends Paciente implements ActionListener {
         btnClean = new JButton("Limpiar");
         btnClean.setBounds(540, 775, 100, 50);
         btnClean.addActionListener(this);
-        btnClean.setEnabled(false);
         windowPac.add(btnClean);
 
         info = new JLabel("Cedula:");
@@ -149,11 +149,17 @@ public class windowPac extends Paciente implements ActionListener {
             btnModify.setEnabled(true);
             btnDelete.setEnabled(true);
             btnClean.setEnabled(true);
+            txtCed.setEditable(false);
             btnAdd.setEnabled(false);
+
         } else {
             btnModify.setEnabled(false);
             btnDelete.setEnabled(false);
             btnAdd.setEnabled(true);
+            btnClean.setEnabled(true);
+
+            txtEditableT();
+
         }
         txtCed.setText(paciente.objPersona.getCedula());
         txtName.setText(paciente.objPersona.getNombre());
@@ -175,6 +181,9 @@ public class windowPac extends Paciente implements ActionListener {
         paciente.setEdad(Integer.parseInt(txtAge.getText()));
         paciente.setSexo(txtSex.getText().toUpperCase());
         paciente.add();
+        txtEditableF();
+        btnAdd.setEnabled(false);
+        btnClean.setEnabled(false);
     }
 
     public void modify() {
@@ -192,6 +201,9 @@ public class windowPac extends Paciente implements ActionListener {
     public void delete() {
         paciente.objPersona.setCedula(txtCed.getText());
         paciente.delete();
+        btnModify.setEnabled(false);
+        btnDelete.setEnabled(false);
+        clean();
     }
 
     public void clean() {
@@ -203,11 +215,36 @@ public class windowPac extends Paciente implements ActionListener {
         prov.setSelectedItem(" ");
         txtAge.setText(" ");
         txtSex.setText(" ");
+        btnAdd.setEnabled(false);
+        btnClean.setEnabled(false);
+        txtEditableF();
+    }
+
+    public void txtEditableF() {
+        txtCed.setEditable(true);
+        txtName.setEditable(false);
+        txtLastName.setEditable(false);
+        txtAddress.setEditable(false);
+        txtTel.setEditable(false);
+        prov.setEditable(false);
+        txtAge.setEditable(false);
+        txtSex.setEditable(false);
+    }
+
+    public void txtEditableT() {
+        txtName.setEditable(true);
+        txtLastName.setEditable(true);
+        txtAddress.setEditable(true);
+        txtTel.setEditable(true);
+        prov.setEditable(true);
+        txtAge.setEditable(true);
+        txtSex.setEditable(true);
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnList) {
             paciente.listTable(tableModel);
+            btnChoice.setEnabled(true);
         }
         if (e.getSource() == btnChoice) {
             int row;
@@ -229,6 +266,8 @@ public class windowPac extends Paciente implements ActionListener {
         }
         if (e.getSource() == btnClean) {
             clean();
+            btnModify.setEnabled(false);
+            btnDelete.setEnabled(false);
         }
     }
 }
