@@ -61,6 +61,7 @@ public class windowPac extends Paciente implements ActionListener {
         btnClean = new JButton("Limpiar");
         btnClean.setBounds(540, 775, 100, 50);
         btnClean.addActionListener(this);
+        btnClean.setEnabled(false);
         windowPac.add(btnClean);
 
         info = new JLabel("Cedula:");
@@ -182,6 +183,7 @@ public class windowPac extends Paciente implements ActionListener {
         paciente.setSexo(txtSex.getText().toUpperCase());
         paciente.add();
         txtEditableF();
+        clean();
         btnAdd.setEnabled(false);
         btnClean.setEnabled(false);
     }
@@ -226,7 +228,7 @@ public class windowPac extends Paciente implements ActionListener {
         txtLastName.setEditable(false);
         txtAddress.setEditable(false);
         txtTel.setEditable(false);
-        prov.setEditable(false);
+        prov.setEnabled(false);
         txtAge.setEditable(false);
         txtSex.setEditable(false);
     }
@@ -236,7 +238,7 @@ public class windowPac extends Paciente implements ActionListener {
         txtLastName.setEditable(true);
         txtAddress.setEditable(true);
         txtTel.setEditable(true);
-        prov.setEditable(true);
+        prov.setEnabled(true);
         txtAge.setEditable(true);
         txtSex.setEditable(true);
     }
@@ -251,6 +253,7 @@ public class windowPac extends Paciente implements ActionListener {
             row = table.getSelectedRow();
             txtCed.setText(String.valueOf(table.getValueAt(row, 0)));
             search();
+            txtEditableT();
         }
         if (e.getSource() == btnSearch) {
             search();

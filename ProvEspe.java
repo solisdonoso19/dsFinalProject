@@ -31,6 +31,23 @@ public class ProvEspe {
         return descripcion;
     }
 
+    public String getDescripcionEsp(String cod) {
+        String sql;
+        ResultSet rs;
+        try {
+            sql = "SELECT * FROM ESPECIALIDAD WHERE CODIGO = '" + cod + "'";
+            rs = DB.executeQuery(sql);
+            if (rs.next()) {
+                codigo = rs.getString("CODIGO");
+                descripcion = rs.getString("DESCRIPCION");
+            }
+            DB.close();
+        } catch (Exception e) {
+            System.out.println("error " + e.toString());
+        }
+        return descripcion;
+    }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
