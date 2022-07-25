@@ -191,7 +191,7 @@ public class windowMed extends Medico implements ActionListener {
         medico.objPersona.setApellido(txtLastName.getText());
         medico.objPersona.setDir(txtAddress.getText());
         medico.objPersona.setTel(txtTel.getText());
-        // medico.especialidad(esp.getSelectedItem());
+        medico.setEspecialidad(String.valueOf(esp.getSelectedItem()));
         medico.setPacientesMes(Integer.parseInt(txtMonth.getText()));
         medico.setPacientesAnual(Integer.parseInt(txtYear.getText()));
         medico.add();
@@ -244,7 +244,7 @@ public class windowMed extends Medico implements ActionListener {
         btnDelete.setEnabled(false);
         clean();
     }
-    
+
     public void clean() {
         txtCod.setText(" ");
         txtCed.setText(" ");

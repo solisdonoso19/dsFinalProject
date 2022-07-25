@@ -75,7 +75,7 @@ public class Medico extends Persona {
 
         try {
 
-            sql = "SELECT * FROM MEDICOS, ESPECIALIDAD WHERE MEDICOS.ESPECIALIDAD = ESPECIALIDAD.CODIGO";
+            sql = "SELECT * FROM MEDICOS, ESPECIALIDAD WHERE MEDICOS.ESPECIALIDAD = ESPECIALIDAD.CODIGO ORDER BY MEDICOS.CODIGO";
             ResultSet rs = DB.executeQuery(sql);
 
             while (rs.next()) {
@@ -94,7 +94,6 @@ public class Medico extends Persona {
         } catch (Exception e) {
             System.out.println("error " + e.toString());
         }
-
 
     }
 
@@ -117,8 +116,8 @@ public class Medico extends Persona {
                 objPersona.dir = rs.getString("DIRECCION");
                 objPersona.tel = rs.getString("TELEFONO");
                 especialidad = rs.getString("ESPECIALIDAD");
-                pacientesMes =Integer.parseInt(rs.getString("PACIENTEMES"));
-                pacientesAnual =Integer.parseInt(rs.getString("PACIENTEANUAL"));
+                pacientesMes = Integer.parseInt(rs.getString("PACIENTEMES"));
+                pacientesAnual = Integer.parseInt(rs.getString("PACIENTEANUAL"));
 
                 find = true;
             }
@@ -131,12 +130,15 @@ public class Medico extends Persona {
     }
 
     public void add() {
+        especialidad = provEspe.getCodEsp(especialidad);
         sql = "";
         try {
             sql = "INSERT INTO MEDICOS (CODIGO, CEDULA, NOMBRE, APELLIDO, DIRECCION, TELEFONO, ESPECIALIDAD, PACIENTEMES, PACIENTEANUAL) values ('"
-                  + codigo +  "', '" + objPersona.cedula + "', '" + objPersona.nombre + "', '" + objPersona.apellido + "', '"
+                    + codigo + "', '" + objPersona.cedula + "', '" + objPersona.nombre + "', '" + objPersona.apellido
+                    + "', '"
                     + objPersona.dir
-                    + "', '" + objPersona.tel + "', '" + "01', '" + pacientesMes + "', '" + pacientesAnual + "')";
+                    + "', '" + objPersona.tel + "', '" + especialidad + "', '" + pacientesMes + "', '" + pacientesAnual
+                    + "')";
             System.out.println(sql);
             DB.executeUpdate(sql);
             JOptionPane.showMessageDialog(mDialog, "Los datos se guardaron correctamente");
@@ -146,13 +148,15 @@ public class Medico extends Persona {
     }
 
     public void modify() {
+        especialidad = provEspe.getCodEsp(especialidad);
         sql = "";
         try {
-            sql = "UPDATE PA SET CODIGO = '" + codigo + "' NOMBRE='" + objPersona.nombre + "', APELLIDO = '" + objPersona.apellido
+            sql = "UPDATE MEDICOS SET CODIGO = '" + codigo + "', NOMBRE='" + objPersona.nombre + "', APELLIDO = '"
+                    + objPersona.apellido
                     + "', DIRECCION = '"
                     + objPersona.dir + "', TELEFONO = '" + objPersona.tel + "', ESPECIALIDAD =  '" + especialidad
-                    + "', PACIENTEMES = '" + pacientesMes + "', PACIENTEANUAL = '" + pacientesAnual
-                    + "' FROM MEDICOS PA JOIN ESPECIALIDAD ES ON PA.PROVINCIA = ES.CODIGO WHERE CEDULA = '"
+                    + "', PACIENTEMES = " + pacientesMes + ", PACIENTEANUAL = " + pacientesAnual
+                    + " WHERE CEDULA = '"
                     + objPersona.cedula + "'";
             System.out.println(sql);
             DB.executeUpdate(sql);

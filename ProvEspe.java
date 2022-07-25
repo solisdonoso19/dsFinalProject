@@ -86,17 +86,34 @@ public class ProvEspe {
 
     }
 
-    public String getCodProv(String prov){
-        String cod="";
+    public String getCodProv(String prov) {
+        String cod = "";
         ResultSet rs;
-        try{
+        try {
             rs = DB.executeQuery("SELECT * FROM PROVINCIA WHERE DESCRIPCION = '" + prov + "';");
-            if(rs.next()){
+            if (rs.next()) {
                 cod = rs.getString("CODIGO");
             }
+            System.out.println(cod + "aqui");
             DB.close();
-        }catch (Exception e){
-            System.err.println("Error: "+e.toString());
+        } catch (Exception e) {
+            System.err.println("Error: " + e.toString());
+        }
+        return cod;
+    }
+
+    public String getCodEsp(String esp) {
+        String cod = "";
+        ResultSet rs;
+        try {
+            rs = DB.executeQuery("SELECT * FROM ESPECIALIDAD WHERE DESCRIPCION = '" + esp + "';");
+            if (rs.next()) {
+                cod = rs.getString("CODIGO");
+            }
+            System.out.println(cod + "aqui");
+            DB.close();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.toString());
         }
         return cod;
     }

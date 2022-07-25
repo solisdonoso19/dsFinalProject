@@ -178,7 +178,7 @@ public class windowPac extends Paciente implements ActionListener {
         paciente.objPersona.setApellido(txtLastName.getText());
         paciente.objPersona.setDir(txtAddress.getText());
         paciente.objPersona.setTel(txtTel.getText());
-        // paciente.provincia(prov.getSelectedItem());
+        paciente.setProvincia(String.valueOf(prov.getSelectedItem()));
         paciente.setEdad(Integer.parseInt(txtAge.getText()));
         paciente.setSexo(txtSex.getText().toUpperCase());
         paciente.add();

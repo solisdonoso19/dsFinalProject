@@ -97,7 +97,7 @@ public class Paciente extends Persona {
 
         try {
 
-            sql = "SELECT * FROM PACIENTES, PROVINCIA WHERE PACIENTES.PROVINCIA = PROVINCIA.CODIGO";
+            sql = "SELECT * FROM PACIENTES, PROVINCIA WHERE PACIENTES.PROVINCIA = PROVINCIA.CODIGO ORDER BY PACIENTES.APELLIDO";
             ResultSet rs = DB.executeQuery(sql);
 
             while (rs.next()) {
@@ -118,12 +118,13 @@ public class Paciente extends Persona {
     }
 
     public void add() {
+        provincia = provEspe.getCodProv(provincia);
         sql = "";
         try {
             sql = "insert into pacientes(cedula,nombre,apellido,direccion,telefono, provincia, edad, sexo) values ('"
                     + objPersona.cedula + "', '" + objPersona.nombre + "', '" + objPersona.apellido + "', '"
                     + objPersona.dir
-                    + "', '" + objPersona.tel + "', '" + "01', '" + edad + "', '" + sexo + "')";
+                    + "', '" + objPersona.tel + "', '" + provincia + "', '" + edad + "', '" + sexo + "')";
             System.out.println(sql);
             DB.executeUpdate(sql);
             JOptionPane.showMessageDialog(mDialog, "Los datos se guardaron correctamente");
@@ -133,7 +134,7 @@ public class Paciente extends Persona {
     }
 
     public void modify() {
-       provincia = provEspe.getCodProv(provincia);
+        provincia = provEspe.getCodProv(provincia);
         sql = "";
         try {
             sql = "UPDATE PACIENTES SET NOMBRE='" + objPersona.nombre + "', APELLIDO = '" + objPersona.apellido
