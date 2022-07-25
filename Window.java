@@ -8,8 +8,8 @@ public class Window implements ActionListener {
     JFrame mWindow, mDialog;
     JButton btnSearch, btnList, btnAdd, btnModify, btnDelete, btnChoice, btnExit;
     JMenuBar menu;
-    JMenu inicio, mantenimiento;
-    JMenuItem menuInicio, menuPacientes, menuMedicos;
+    JMenu inicio, mantenimiento, reportes;
+    JMenuItem menuInicio, menuPacientes, menuMedicos, rMedicos, rPacientes;
 
     public void windowPrint() {
 
@@ -39,6 +39,17 @@ public class Window implements ActionListener {
         menuMedicos = new JMenuItem("Medicos");
         mantenimiento.add(menuMedicos);
         menuMedicos.addActionListener(this);
+
+        reportes = new JMenu("Reportes");
+        menu.add(reportes);
+
+        rPacientes = new JMenuItem("Reporte de Pacientes");
+        reportes.add(rPacientes);
+        rPacientes.addActionListener(this);
+
+        rMedicos = new JMenuItem("Reporte de Medicos");
+        reportes.add(rMedicos);
+        rMedicos.addActionListener(this);
 
         mWindow.setVisible(true);
 
@@ -72,6 +83,10 @@ public class Window implements ActionListener {
         if (e.getSource() == menuPacientes) {
             new windowPac(mWindow);
         }
+        if (e.getSource() == rPacientes) {
+            new wReportPac(mWindow);
+        }
+
         if (e.getSource() == btnExit) {
             System.exit(0);
         }

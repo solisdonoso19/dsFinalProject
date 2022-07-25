@@ -55,4 +55,8 @@ public class MySql {
         }
     }
 
+    public Connection getConnetion() {
+        open();
+        return con;
+    }
 }
