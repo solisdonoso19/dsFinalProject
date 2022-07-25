@@ -133,13 +133,14 @@ public class Paciente extends Persona {
     }
 
     public void modify() {
+       provincia = provEspe.getCodProv(provincia);
         sql = "";
         try {
-            sql = "UPDATE PA SET NOMBRE='" + objPersona.nombre + "', APELLIDO = '" + objPersona.apellido
+            sql = "UPDATE PACIENTES SET NOMBRE='" + objPersona.nombre + "', APELLIDO = '" + objPersona.apellido
                     + "', DIRECCION = '"
-                    + objPersona.dir + "', TELEFONO = '" + objPersona.tel + "', PA.PROVINCIA =  '" + provincia
+                    + objPersona.dir + "', TELEFONO = '" + objPersona.tel + "', PROVINCIA =  '" + provincia
                     + "', EDAD = '" + edad + "', SEXO = '" + sexo
-                    + "' FROM PACIENTES PA JOIN PROVINCIA PR ON PA.PROVINCIA = PR.CODIGO WHERE CEDULA = '"
+                    + "'WHERE CEDULA = '"
                     + objPersona.cedula + "'";
             System.out.println(sql);
             DB.executeUpdate(sql);

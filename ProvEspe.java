@@ -85,4 +85,19 @@ public class ProvEspe {
         }
 
     }
+
+    public String getCodProv(String prov){
+        String cod="";
+        ResultSet rs;
+        try{
+            rs = DB.executeQuery("SELECT * FROM PROVINCIA WHERE DESCRIPCION = '" + prov + "';");
+            if(rs.next()){
+                cod = rs.getString("CODIGO");
+            }
+            DB.close();
+        }catch (Exception e){
+            System.err.println("Error: "+e.toString());
+        }
+        return cod;
+    }
 }
