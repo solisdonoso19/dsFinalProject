@@ -6,10 +6,11 @@ import java.awt.event.*;
 
 public class Window implements ActionListener {
     JFrame mWindow, mDialog;
-    JButton btnSearch, btnList, btnAdd, btnModify, btnDelete, btnChoice, btnExit;
+    JButton btnExit;
     JMenuBar menu;
     JMenu inicio, mantenimiento, reportes;
     JMenuItem menuInicio, menuPacientes, menuMedicos, rMedicos, rPacientes;
+    JLabel info;
 
     public void windowPrint() {
 
@@ -52,7 +53,6 @@ public class Window implements ActionListener {
         rMedicos.addActionListener(this);
 
         mWindow.setVisible(true);
-
         exit();
     }
 
@@ -62,12 +62,42 @@ public class Window implements ActionListener {
         btnExit.setBounds(100, 890, 1700, 50);
         btnExit.addActionListener(this);
         mWindow.add(btnExit);
-        mWindow.revalidate();
-        mWindow.repaint();
-    }
 
-    public void hola() {
-        mWindow.getContentPane().removeAll();
+        info = new JLabel("Universidad Tecnologica de Panama");
+        info.setSize(250, 50);
+        info.setLocation(950, 50);
+        mWindow.add(info);
+
+        info = new JLabel("Facultad de Sistemas Computacionales");
+        info.setSize(250, 50);
+        info.setLocation(930, 100);
+        mWindow.add(info);
+
+        info = new JLabel("Licenciatura en Desarrollo de Software");
+        info.setSize(250, 50);
+        info.setLocation(930, 150);
+        mWindow.add(info);
+
+        info = new JLabel("Desarrollo de Software III");
+        info.setSize(250, 50);
+        info.setLocation(980, 200);
+        mWindow.add(info);
+
+        info = new JLabel("Carlos Solis");
+        info.setSize(100, 50);
+        info.setLocation(1030, 250);
+        mWindow.add(info);
+
+        info = new JLabel("6-723-1380");
+        info.setSize(100, 50);
+        info.setLocation(1040, 300);
+        mWindow.add(info);
+
+        info = new JLabel("Proyecto Final Base de Datos");
+        info.setSize(200, 50);
+        info.setLocation(970, 350);
+        mWindow.add(info);
+
         mWindow.revalidate();
         mWindow.repaint();
     }
@@ -85,6 +115,9 @@ public class Window implements ActionListener {
         }
         if (e.getSource() == rPacientes) {
             new wReportPac(mWindow);
+        }
+        if (e.getSource() == rMedicos) {
+            new wReportMed(mWindow);
         }
 
         if (e.getSource() == btnExit) {

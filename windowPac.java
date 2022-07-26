@@ -133,7 +133,7 @@ public class windowPac extends Paciente implements ActionListener {
         prov = new JComboBox();
         prov.setBounds(1605, 830, 150, 30);
         provincia.listProv(prov);
-        prov.setEditable(false);
+        prov.setEnabled(false);
         windowPac.add(prov);
 
         tableModel = new DefaultTableModel();
@@ -150,8 +150,10 @@ public class windowPac extends Paciente implements ActionListener {
             btnModify.setEnabled(true);
             btnDelete.setEnabled(true);
             btnClean.setEnabled(true);
+            txtEditableT();
             txtCed.setEditable(false);
             btnAdd.setEnabled(false);
+            
 
         } else {
             btnModify.setEnabled(false);
@@ -160,9 +162,9 @@ public class windowPac extends Paciente implements ActionListener {
             btnClean.setEnabled(true);
 
             txtEditableT();
-
+            txtCed.setEditable(false);
         }
-        txtCed.setText(paciente.objPersona.getCedula());
+       
         txtName.setText(paciente.objPersona.getNombre());
         txtLastName.setText(paciente.objPersona.getApellido());
         txtAddress.setText(paciente.objPersona.getDir());
@@ -173,7 +175,7 @@ public class windowPac extends Paciente implements ActionListener {
     }
 
     public void add() {
-        paciente.objPersona.setCedula(txtCed.getText());
+        paciente.objPersona.setCedula(txtCed.getText().trim());
         paciente.objPersona.setNombre(txtName.getText());
         paciente.objPersona.setApellido(txtLastName.getText());
         paciente.objPersona.setDir(txtAddress.getText());
@@ -189,7 +191,7 @@ public class windowPac extends Paciente implements ActionListener {
     }
 
     public void modify() {
-        paciente.objPersona.setCedula(txtCed.getText());
+        paciente.objPersona.setCedula(txtCed.getText().trim());
         paciente.objPersona.setNombre(txtName.getText());
         paciente.objPersona.setApellido(txtLastName.getText());
         paciente.objPersona.setDir(txtAddress.getText());
@@ -198,10 +200,15 @@ public class windowPac extends Paciente implements ActionListener {
         paciente.setEdad(Integer.parseInt(txtAge.getText()));
         paciente.setSexo(txtSex.getText());
         paciente.modify();
+        clean();
+        btnAdd.setEnabled(false);
+        btnClean.setEnabled(false);
+        btnDelete.setEnabled(false);
+        btnModify.setEnabled(false);
     }
 
     public void delete() {
-        paciente.objPersona.setCedula(txtCed.getText());
+        paciente.objPersona.setCedula(txtCed.getText().trim());
         paciente.delete();
         btnModify.setEnabled(false);
         btnDelete.setEnabled(false);
@@ -219,7 +226,9 @@ public class windowPac extends Paciente implements ActionListener {
         txtSex.setText(" ");
         btnAdd.setEnabled(false);
         btnClean.setEnabled(false);
+        btnChoice.setEnabled(false);
         txtEditableF();
+        paciente.cleanList(tableModel);
     }
 
     public void txtEditableF() {
@@ -247,6 +256,7 @@ public class windowPac extends Paciente implements ActionListener {
         if (e.getSource() == btnList) {
             paciente.listTable(tableModel);
             btnChoice.setEnabled(true);
+            btnClean.setEnabled(true);
         }
         if (e.getSource() == btnChoice) {
             int row;

@@ -6,63 +6,63 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class wReportPac implements ActionListener {
-    public JFrame wReportPac;
+public class wReportMed implements ActionListener {
+    public JFrame wReportMed;
     public JButton btnGenerate;
     public JLabel info;
-    public JRadioButton name, age, lastName;
+    public JRadioButton ced, esp,lastName;
     public ButtonGroup rButton;
     MySql DB = new MySql();
 
-    wReportPac(JFrame window) {
-        wReportPac = window;
-        wReportPac.getContentPane().removeAll();
+    wReportMed(JFrame window) {
+        wReportMed = window;
+        wReportMed.getContentPane().removeAll();
 
         info = new JLabel("Seleccione el orden en el cual desea el reporte: ");
         info.setBounds(20, 20, 600, 50);
-        wReportPac.add(info);
+        wReportMed.add(info);
 
-        name = new JRadioButton("Ordenado por Nombre: ");
-        name.setBounds(20, 60, 600, 50);
-        wReportPac.add(name);
+        ced = new JRadioButton("Ordenado por Cedula: ");
+        ced.setBounds(20, 60, 600, 50);
+        wReportMed.add(ced);
 
         lastName = new JRadioButton("Ordenado por Apellido: ");
         lastName.setBounds(20, 100, 600, 50);
-        wReportPac.add(lastName);
+        wReportMed.add(lastName);
 
-        age = new JRadioButton("Ordenado por Edad: ");
-        age.setBounds(20, 140, 600, 50);
-        wReportPac.add(age);
+        esp = new JRadioButton("Ordenado por Especialidad: ");
+        esp.setBounds(20, 140, 600, 50);
+        wReportMed.add(esp);
 
         rButton = new ButtonGroup();
-        rButton.add(name);
+        rButton.add(ced);
         rButton.add(lastName);
-        rButton.add(age);
+        rButton.add(esp);
 
         btnGenerate = new JButton("Generar");
         btnGenerate.setBounds(20, 200, 600, 50);
         btnGenerate.addActionListener(this);
-        wReportPac.add(btnGenerate);
+        wReportMed.add(btnGenerate);
 
-        wReportPac.repaint();
+        wReportMed.repaint();
     }
 
     public void report() {
         String order;
         order = "ID";
         try {
-            if (name.isSelected()) {
-                order = "NOMBRE";
+            if (ced.isSelected()) {
+                order = "CEDULA";
             } else if (lastName.isSelected()) {
                 order = "APELLIDO";
             } else {
-                order = "EDAD";
+                order = "ESPECIALIDAD";
             }
 
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("orden", order);
             parameter.put("titulo", order);
-            JasperPrint jasperPrint = JasperFillManager.fillReport("JasperReport/PACIENTES.jasper", parameter,
+            JasperPrint jasperPrint = JasperFillManager.fillReport("JasperReport/MEDICOS.jasper", parameter,
                     DB.getConnetion());
             JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
             jasperViewer.setVisible(true);

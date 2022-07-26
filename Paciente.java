@@ -53,7 +53,7 @@ public class Paciente extends Persona {
         sql = "";
 
         try {
-            sql = "select * from pacientes where cedula='" + ced + "'";
+            sql = "select * from pacientes where cedula='" + ced.trim() + "'";
             System.out.println(sql);
             ResultSet rs = DB.executeQuery(sql);
             cedula = ced;
@@ -76,6 +76,11 @@ public class Paciente extends Persona {
             System.out.println("error " + e.toString());
         }
         return find;
+    }
+
+    public void cleanList(DefaultTableModel table){
+        table.setColumnCount(0);
+        table.setRowCount(0);
     }
 
     public void listTable(DefaultTableModel table) {
@@ -122,7 +127,7 @@ public class Paciente extends Persona {
         sql = "";
         try {
             sql = "insert into pacientes(cedula,nombre,apellido,direccion,telefono, provincia, edad, sexo) values ('"
-                    + objPersona.cedula + "', '" + objPersona.nombre + "', '" + objPersona.apellido + "', '"
+                    + objPersona.cedula.trim() + "', '" + objPersona.nombre + "', '" + objPersona.apellido + "', '"
                     + objPersona.dir
                     + "', '" + objPersona.tel + "', '" + provincia + "', '" + edad + "', '" + sexo + "')";
             System.out.println(sql);
@@ -142,7 +147,7 @@ public class Paciente extends Persona {
                     + objPersona.dir + "', TELEFONO = '" + objPersona.tel + "', PROVINCIA =  '" + provincia
                     + "', EDAD = '" + edad + "', SEXO = '" + sexo
                     + "'WHERE CEDULA = '"
-                    + objPersona.cedula + "'";
+                    + objPersona.cedula.trim() + "'";
             System.out.println(sql);
             DB.executeUpdate(sql);
             JOptionPane.showMessageDialog(mDialog, "Los datos se modificaron correctamente");
@@ -155,7 +160,7 @@ public class Paciente extends Persona {
     public void delete() {
         sql = "";
         try {
-            sql = "DELETE FROM PACIENTES WHERE CEDULA = '" + objPersona.cedula + "'";
+            sql = "DELETE FROM PACIENTES WHERE CEDULA = '" + objPersona.cedula.trim() + "'";
 
             System.out.println(sql);
             DB.executeUpdate(sql);

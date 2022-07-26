@@ -160,6 +160,7 @@ public class windowMed extends Medico implements ActionListener {
             btnModify.setEnabled(true);
             btnDelete.setEnabled(true);
             btnClean.setEnabled(true);
+            txtEditableT();
             txtCed.setEditable(false);
             btnAdd.setEnabled(false);
 
@@ -170,10 +171,11 @@ public class windowMed extends Medico implements ActionListener {
             btnClean.setEnabled(true);
 
             txtEditableT();
+            txtCed.setEditable(false);
 
         }
 
-        txtCed.setText(medico.objPersona.getCedula());
+        
         txtCod.setText(String.valueOf(medico.getCodigo()));
         txtName.setText(medico.objPersona.getNombre());
         txtLastName.setText(medico.objPersona.getApellido());
@@ -185,7 +187,7 @@ public class windowMed extends Medico implements ActionListener {
     }
 
     public void add() {
-        medico.objPersona.setCedula(txtCed.getText());
+        medico.objPersona.setCedula(txtCed.getText().trim());
         medico.setCodigo(Integer.parseInt(txtCod.getText()));
         medico.objPersona.setNombre(txtName.getText());
         medico.objPersona.setApellido(txtLastName.getText());
@@ -202,7 +204,7 @@ public class windowMed extends Medico implements ActionListener {
     }
 
     public void modify() {
-        medico.objPersona.setCedula(txtCed.getText());
+        medico.objPersona.setCedula(txtCed.getText().trim());
         medico.setCodigo(Integer.parseInt(txtCod.getText()));
         medico.objPersona.setNombre(txtName.getText());
         medico.objPersona.setApellido(txtLastName.getText());
@@ -212,6 +214,11 @@ public class windowMed extends Medico implements ActionListener {
         medico.setPacientesMes(Integer.parseInt(txtMonth.getText()));
         medico.setPacientesAnual(Integer.parseInt(txtYear.getText()));
         medico.modify();
+        clean();
+        btnAdd.setEnabled(false);
+        btnClean.setEnabled(false);
+        btnDelete.setEnabled(false);
+        btnModify.setEnabled(false);
     }
 
     public void txtEditableF() {
@@ -238,7 +245,7 @@ public class windowMed extends Medico implements ActionListener {
     }
 
     public void delete() {
-        medico.objPersona.setCedula(txtCed.getText());
+        medico.objPersona.setCedula(txtCed.getText().trim());
         medico.delete();
         btnModify.setEnabled(false);
         btnDelete.setEnabled(false);
@@ -257,13 +264,16 @@ public class windowMed extends Medico implements ActionListener {
         txtYear.setText(" ");
         btnAdd.setEnabled(false);
         btnClean.setEnabled(false);
+        btnChoice.setEnabled(false);
         txtEditableF();
+        medico.cleanList(tableModel);
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnList) {
             medico.listTable(tableModel);
             btnChoice.setEnabled(true);
+            btnClean.setEnabled(true);
         }
         if (e.getSource() == btnChoice) {
             int row;

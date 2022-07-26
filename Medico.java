@@ -55,6 +55,11 @@ public class Medico extends Persona {
         this.pacientesAnual = pacientesAnual;
     }
 
+    public void cleanList(DefaultTableModel table){
+        table.setColumnCount(0);
+        table.setRowCount(0);
+    }
+
     public void listTable(DefaultTableModel table) {
         sql = "";
 
@@ -103,7 +108,7 @@ public class Medico extends Persona {
         sql = "";
 
         try {
-            sql = "SELECT * FROM MEDICOS WHERE CEDULA ='" + ced + "'";
+            sql = "SELECT * FROM MEDICOS WHERE CEDULA ='" + ced.trim() + "'";
             System.out.println(sql);
             ResultSet rs = DB.executeQuery(sql);
             cedula = ced;
@@ -134,7 +139,7 @@ public class Medico extends Persona {
         sql = "";
         try {
             sql = "INSERT INTO MEDICOS (CODIGO, CEDULA, NOMBRE, APELLIDO, DIRECCION, TELEFONO, ESPECIALIDAD, PACIENTEMES, PACIENTEANUAL) values ('"
-                    + codigo + "', '" + objPersona.cedula + "', '" + objPersona.nombre + "', '" + objPersona.apellido
+                    + codigo + "', '" + objPersona.cedula.trim() + "', '" + objPersona.nombre + "', '" + objPersona.apellido
                     + "', '"
                     + objPersona.dir
                     + "', '" + objPersona.tel + "', '" + especialidad + "', '" + pacientesMes + "', '" + pacientesAnual
@@ -157,7 +162,7 @@ public class Medico extends Persona {
                     + objPersona.dir + "', TELEFONO = '" + objPersona.tel + "', ESPECIALIDAD =  '" + especialidad
                     + "', PACIENTEMES = " + pacientesMes + ", PACIENTEANUAL = " + pacientesAnual
                     + " WHERE CEDULA = '"
-                    + objPersona.cedula + "'";
+                    + objPersona.cedula.trim() + "'";
             System.out.println(sql);
             DB.executeUpdate(sql);
             JOptionPane.showMessageDialog(mDialog, "Los datos se modificaron correctamente");
@@ -170,7 +175,7 @@ public class Medico extends Persona {
     public void delete() {
         sql = "";
         try {
-            sql = "DELETE FROM MEDICOS WHERE CEDULA = '" + objPersona.cedula + "'";
+            sql = "DELETE FROM MEDICOS WHERE CEDULA = '" + objPersona.cedula.trim() + "'";
             System.out.println(sql);
             DB.executeUpdate(sql);
             JOptionPane.showMessageDialog(mDialog, "Los datos se Borraron correctamente");
